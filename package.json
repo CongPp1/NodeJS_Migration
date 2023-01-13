@@ -1,0 +1,30 @@
+{
+  "name": "tts_mastertran_migration",
+  "version": "1.0.0",
+  "description": "Migration",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CongPp1/NodeJS_Migration.git"
+  },
+  "author": "congtt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CongPp1/NodeJS_Migration/issues"
+  },
+  "homepage": "https://github.com/CongPp1/NodeJS_Migration#readme",
+  "devDependencies": {
+    "cli": "^1.0.1",
+    "express": "^4.18.2",
+    "sequelize": "^6.28.0"
+  },
+  "dependencies": {
+    "joi": "^17.7.0",
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0"
+  }
+}
