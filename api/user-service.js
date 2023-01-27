@@ -45,7 +45,12 @@ const getAllEmployeesByPositionId = async(position_id) => {
 }
 
 const getEmployeeById = async (id) => {
-    const detail = await model.employee.findOne({ where: { id }, });
+    const detail = await model.employee.findOne({ 
+        where: { id },
+        include: [
+            {model: model.position}
+        ]
+    });
     return { detail };
 }
 
