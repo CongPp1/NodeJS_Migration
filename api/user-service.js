@@ -27,6 +27,8 @@ const getAllEmployees = async (query) => {
     return { data };
 }
 
+const getAllEmployeesByPosition
+
 const getEmployeeById = async (id) => {
     const detail = await model.employee.findOne({ where: { id }, });
     return { detail };
