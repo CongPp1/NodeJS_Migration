@@ -10,6 +10,15 @@ const getAll = async (req, res) => {
     }
 }
 
+const getAllByPositionId = async(req, res) => {
+    try {
+        const result = await employeeService.getAllEmployeesByPositionId(req.params.position_id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({message: 'Error!', error});
+    }
+}
+
 const getOneById = async (req, res) => {
     try {
         const detail = await employeeService.getEmployeeById(req.params.id);
@@ -66,6 +75,7 @@ const deleteExistingEmployee = async(req, res) => {
 module.exports = {
     getAll,
     getOneById,
+    getAllByPositionId,
     updateById,
     addEmployee,
     deleteExistingEmployee

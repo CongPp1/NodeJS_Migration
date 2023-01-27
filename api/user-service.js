@@ -2,6 +2,7 @@ const { Op, where } = require('sequelize');
 const { sequelize } = require('../models');
 const model = require('../models/index');
 const Joi = require('joi');
+const position = require('../models/position');
 
 const getAllEmployees = async (query) => {
     const { name = '' } = query;
@@ -22,12 +23,26 @@ const getAllEmployees = async (query) => {
         ],
         where: {
             [Op.and]: condition
-        }
+        },
+        include: [
+            {model: model.position}
+        ]
     });
     return { data };
 }
 
-const getAllEmployeesByPosition
+const getAllEmployeesByPositionId = async(position_id) => {
+    const data2 = await model.employee.findAll({
+        where: {position_id},
+        include: [
+            {model: model.position}
+        ],
+        order: [
+            ['employee_name', 'ASC']
+        ]
+    });
+    return data2;
+}
 
 const getEmployeeById = async (id) => {
     const detail = await model.employee.findOne({ where: { id }, });
@@ -52,6 +67,7 @@ const deleteEmployee = async (id) => {
 module.exports = {
     getAllEmployees,
     getEmployeeById,
+    getAllEmployeesByPositionId,
     updateEmployeeBiId,
     addNewEmployee,
     deleteEmployee,

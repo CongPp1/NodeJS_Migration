@@ -18,8 +18,12 @@ module.exports = {
       birthday: {
         type: Sequelize.DATE
       },
-      employee_position: {
-        type: Sequelize.STRING
+      position_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'positions',
+          key: 'id'
+        }
       },
       entry_date: {
         type: Sequelize.DATE
