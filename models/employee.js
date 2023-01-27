@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      employee.belongsTo(models.position, { foreignKey: 'position_id', targetKey: 'id' })
     }
   }
   employee.init({
     employee_name: DataTypes.STRING,
     birthday: DataTypes.DATE,
-    employee_position: DataTypes.STRING,
+    position_id: DataTypes.INTEGER,
     entry_date: DataTypes.DATE,
     address: DataTypes.STRING,
     email: DataTypes.STRING
