@@ -5,7 +5,8 @@ const Joi = require('joi');
 const position = require('../models/position');
 
 const getAllEmployees = async (query) => {
-    const { name = '' } = query;
+    const { name = '', page, limit, order } = query;
+    const offset = (!page || page <= 1) ? 0 : (page - 1) * limit;
     let search = '';
     if (name) {
         search = name.toLowerCase();
@@ -16,26 +17,32 @@ const getAllEmployees = async (query) => {
             sequelize.where(sequelize.fn('LOWER', sequelize.col('employee_name')), 'LIKE', `%${search}%`),
         ]
     }]
+    const toatalEmps = await model.employee.count({
+        where: {
+            [Op.and]: condition
+        }
+    })
     const data = await model.employee.findAll({
-        //Sắp xếp theo thứ tự tăng dần của id:
+        offset,
+        limit,
         order: [
-            ['id', 'ASC']
+            ['id', order]
         ],
         where: {
             [Op.and]: condition
         },
         include: [
-            {model: model.position}
+            { model: model.position }
         ]
     });
-    return { data };
+    return { data, pagination: { page: parseInt(page), limit: parseInt(limit), toatalEmps } };
 }
 
-const getAllEmployeesByPositionId = async(position_id) => {
+const getAllEmployeesByPositionId = async (position_id) => {
     const data2 = await model.employee.findAll({
-        where: {position_id},
+        where: { position_id },
         include: [
-            {model: model.position}
+            { model: model.position }
         ],
         order: [
             ['employee_name', 'ASC']
@@ -45,10 +52,10 @@ const getAllEmployeesByPositionId = async(position_id) => {
 }
 
 const getEmployeeById = async (id) => {
-    const detail = await model.employee.findOne({ 
+    const detail = await model.employee.findOne({
         where: { id },
         include: [
-            {model: model.position}
+            { model: model.position }
         ]
     });
     return { detail };
