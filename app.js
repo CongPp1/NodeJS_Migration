@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.port || 8008;
-const employeeRoute = require('./api/user-route');
+const routes = require('./routes');
 const db = require('./models/index');
 
 
 app.use(express.json());
-app.use('/api/employee', employeeRoute);
+app.use('/api', routes);
 
 
 app.get('/', (req, res) => {

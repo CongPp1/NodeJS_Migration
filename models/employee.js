@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       employee.belongsTo(models.position, {foreignKey: 'position_id', targetKey: 'id'});
+      employee.belongsTo(models.department, {foreignKey: 'department_id', targetKey: 'id'});
     }
   }
   employee.init({
     employee_name: DataTypes.STRING,
     birthday: DataTypes.DATE,
     position_id: DataTypes.INTEGER,
+    department_id: DataTypes.INTEGER,
     entry_date: DataTypes.DATE,
     address: DataTypes.STRING,
     email: DataTypes.STRING

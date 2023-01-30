@@ -19,12 +19,31 @@ const getAllByPositionId = async(req, res) => {
     }
 }
 
+const getAllByDepartmentId = async(req, res) => {
+    try {
+        const result2 = await employeeService.getAllEmployeesByDepartmentId(req.params.department_id);
+        res.status(200).json(result2);
+    } catch (error) {
+        res.status(404).json({message: 'Error!', error});
+    }
+}
+
 const getOneById = async (req, res) => {
     try {
         const detail = await employeeService.getEmployeeById(req.params.id);
         res.status(200).json(detail);
     } catch (error) {
         res.status(404).json({ message: 'Cannot find this employee', error });
+    }
+}
+
+const countAll = async(req, res) => {
+    try {
+        const result = await employeeService.countingAllEmpInEachDep();
+        res.status(200).json(result);
+    } catch (error) {
+        console.log('err: ', error);
+        res.status(500).json({message: 'Error!', error});
     }
 }
 
@@ -76,6 +95,8 @@ module.exports = {
     getAll,
     getOneById,
     getAllByPositionId,
+    getAllByDepartmentId,
+    countAll,
     updateById,
     addEmployee,
     deleteExistingEmployee
